@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 #read the dataSet 
 data = pd.read_csv("dataset.csv")
 addedcolumn = []
+#I am sure there is a more elegant python way :P
 for i in range(1,41):
     for j in range(0,15):
         addedcolumn.append(i)
@@ -36,27 +37,48 @@ scaler = sklearn.preprocessing.StandardScaler().fit(X_train)
 X_train= scaler.transform(X_train)
 X_test= scaler.transform(X_test)
 
+#in this cell we splitted the MFCC features and MFCC-Delta Features
+MFCC_train= X_train[:,:14]
+MFCC_Delta_train= X_train[:,14:]
+MFCC_test= X_test[:,:14]
+MFCC_Delta_test= X_test[:,14:]
 
-##### Applying the random Forest Classification
+######################################## Applying the random Forest Classification To identify Distinct people 
+
+#################################################ON ALL THE COEFICCENTs
 myForest = sklearn.ensemble.RandomForestClassifier(random_state=0,n_estimators=100)
 myForest.fit(X_train,y_train)
-
-print(myForest.estimators_)
 
 #### plotting takes alooot of ram 
 #for subTree in myForest.estimators_:
     #plt.figure()
     #sklearn.tree.plot_tree(subTree);
-
-#ACuuracy scores
 train_acc = sklearn.metrics.accuracy_score(y_train, myForest.predict(X_train))
 test_acc  = sklearn.metrics.accuracy_score(y_test, myForest.predict(X_test))
 
-print ("Training Accuracy: %f , Testing Accuracy: %f " % (train_acc, test_acc))
+print ("ON all Coefficents : Training Accuracy: %f , Testing Accuracy: %f " % (train_acc, test_acc))
+
+##################################################ON MFCC ONLY
+myForest = sklearn.ensemble.RandomForestClassifier(random_state=0,n_estimators=100)
+myForest.fit(MFCC_train,y_train)
+train_acc = sklearn.metrics.accuracy_score(y_train, myForest.predict(MFCC_train))
+test_acc  = sklearn.metrics.accuracy_score(y_test, myForest.predict(MFCC_test))
+
+print ("On MFCC coefficents:Training Accuracy: %f , Testing Accuracy: %f " % (train_acc, test_acc))
+
+###################################################On MFCC DELTA
+myForest = sklearn.ensemble.RandomForestClassifier(random_state=0,n_estimators=100)
+myForest.fit(MFCC_Delta_train,y_train)
+train_acc = sklearn.metrics.accuracy_score(y_train, myForest.predict(MFCC_Delta_train))
+test_acc  = sklearn.metrics.accuracy_score(y_test, myForest.predict(MFCC_Delta_test))
+
+print ("On MFCC DELTA coefficents:Training Accuracy: %f , Testing Accuracy: %f " % (train_acc, test_acc))
 
 
-
-
+#RESULTS (INterseting how little did the mfcc delta contribute ? Is there anything wrong i did?)
+#ON all Coefficents : Training Accuracy: 1.000000 , Testing Accuracy: 0.875000 
+#On MFCC coefficents:Training Accuracy: 1.000000 , Testing Accuracy: 0.891667 
+#On MFCC DELTA coefficents:Training Accuracy: 1.000000 , Testing Accuracy: 0.075000  
 
 
 

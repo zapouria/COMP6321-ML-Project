@@ -17,6 +17,6 @@ Our code submission contains the following files:
 * Runing the scripts by order in the report.ipynb you can see the steps that we took for this project and you can see the output. You can run Feature extraction, however it will takes time since we are working on 950 voices.
 * GPU is not required.
 * The report notebook saves files to an "out" directory.
-* This is the link to our data sets.
+* This is the link to our data sets : https://www.dropbox.com/sh/v0vivtco9krfcxr/AACUp5i3GC1mYDCKdYYbGrIUa?dl=0
 
 The data set was downloaded from http://www.openslr.org/12/

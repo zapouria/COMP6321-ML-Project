@@ -14,7 +14,7 @@ Our code submission contains the following files:
     ./train_LR.py                   <-- script to train our Logistic Regression
     ./train_svm.py                  <-- script to train our SVM
 
-* Runing the scripts by order in the report.ipynb you can see the steps that we took for this project and you can see the output.
+* Runing the scripts by order in the report.ipynb you can see the steps that we took for this project and you can see the output. You can run Feature extraction, however it will takes time since we are working on 950 voices.
 * GPU is not required.
 * The report notebook saves files to an "out" directory.
 * This is the link to our data sets.

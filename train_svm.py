@@ -9,6 +9,7 @@ import seaborn as sns
 import warnings
 from sklearn.manifold import TSNE
 from mpl_toolkits.mplot3d import Axes3D
+from train_knn import performance
 
 
 def SVM(xtrn, xtst, ytrn, ytst, **kwargs):
@@ -32,3 +33,8 @@ def SVM(xtrn, xtst, ytrn, ytst, **kwargs):
     # Testing Scores
     SVCtest = SVM_search.best_estimator_.score(xtst, ytst)*100
     return SVCtest, SVM_search.best_estimator_
+
+
+def svm_best(X_train, X_test, y_train, y_test, multi_class):
+    _, SVMmodel = SVM(X_train, X_test, y_train, y_test, multi_class=multi_class) #MFCC
+    performance(SVMmodel, X_train, X_test, y_train, y_test)

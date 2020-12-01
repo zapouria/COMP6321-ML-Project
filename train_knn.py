@@ -46,3 +46,21 @@ def performance(model, xtrn, xtst, ytrn, ytst):
     fig, ax = plt.subplots(figsize=(8, 8))
     sklearn.metrics.plot_confusion_matrix(model, xtst, ytst, ax=ax)
     plt.show()
+
+
+def KNN_best(X_train, X_test, y_train, y_test):
+    _, model = KNN(X_train, X_test, y_train, y_test, verbose=1)
+    performance(model, X_train, X_test, y_train, y_test)
+
+
+def best_scores(X_train, X_test, y_train, y_test):
+    # In this cell KNN is applied to the reduced dimension of X_train into different dimensions to see which one has
+    # the best accuracy
+    score = []
+    for i in range(1, 26):
+        PCA = sklearn.decomposition.PCA(n_components=i).fit(X_train)
+        PCA_train = PCA.transform(X_train)
+        PCA_test = PCA.transform(X_test)
+        test_score, _ = KNN(PCA_train, PCA_test, y_train, y_test)
+        score.append(test_score)
+    print('\033[94m', "Best Dimension is", score.index(max(score)), 'the max accuracy is', max(score), '\033[0m')

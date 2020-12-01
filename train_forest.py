@@ -10,6 +10,7 @@ import seaborn as sns
 import warnings
 from sklearn.manifold import TSNE
 from mpl_toolkits.mplot3d import Axes3D
+from train_knn import performance
 
 
 def Forest(xtrn, ytrn, **kwargs):
@@ -29,3 +30,8 @@ def Forest(xtrn, ytrn, **kwargs):
     print("The best score is: %.2f" % rand_mfcc_forest_score)
     print("The best patameters is:", rand_mfcc_forest.best_params_)
     return rand_mfcc_forest.best_estimator_
+
+
+def forest_best(X_train, X_test, y_train, y_test):
+    best_mfcc_model = Forest(X_train, y_train, verbose=1)
+    performance(best_mfcc_model, X_train, X_test, y_train, y_test)
